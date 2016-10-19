@@ -1,0 +1,20 @@
+;	STMicroelectronics Workspace file
+
+[Version]
+Keyword=ST7Workspace-V0.7
+
+[Project0]
+Filename=motor1\stvd\motor1.stp
+Dependencies=
+
+[Project1]
+Filename=motor2\stvd\motor2.stp
+Dependencies=
+
+[Project2]
+Filename=motor3\stvd\motor3.stp
+Dependencies=
+[Options]
+ActiveProject=motor2
+ActiveConfig=Debug
+AddSortedElements=1
