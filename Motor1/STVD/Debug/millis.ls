@@ -38,50 +38,78 @@
  131  001f ae0000        	ldw	x,#_current_millis
  132  0022 cd0000        	call	c_ltor
  136  0025 81            	ret
- 162                     ; 39 INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23) 
- 162                     ; 40 
- 162                     ; 41 {   
- 164                     	switch	.text
- 165  0026               f_TIM4_UPD_OVF_IRQHandler:
- 167  0026 8a            	push	cc
- 168  0027 84            	pop	a
- 169  0028 a4bf          	and	a,#191
- 170  002a 88            	push	a
- 171  002b 86            	pop	cc
- 172  002c 3b0002        	push	c_x+2
- 173  002f be00          	ldw	x,c_x
- 174  0031 89            	pushw	x
- 175  0032 3b0002        	push	c_y+2
- 176  0035 be00          	ldw	x,c_y
- 177  0037 89            	pushw	x
- 180                     ; 43 	current_millis ++;
- 182  0038 ae0000        	ldw	x,#_current_millis
- 183  003b a601          	ld	a,#1
- 184  003d cd0000        	call	c_lgadc
- 186                     ; 44 	TIM4_ClearITPendingBit(TIM4_IT_UPDATE);
- 188  0040 a601          	ld	a,#1
- 189  0042 cd0000        	call	_TIM4_ClearITPendingBit
- 191                     ; 45 }
- 194  0045 85            	popw	x
- 195  0046 bf00          	ldw	c_y,x
- 196  0048 320002        	pop	c_y+2
- 197  004b 85            	popw	x
- 198  004c bf00          	ldw	c_x,x
- 199  004e 320002        	pop	c_x+2
- 200  0051 80            	iret
- 223                     	xdef	f_TIM4_UPD_OVF_IRQHandler
- 224                     	xdef	_current_millis
- 225                     	xdef	_millis
- 226                     	xdef	_Millis_Init
- 227                     	xref	_TIM4_ClearITPendingBit
- 228                     	xref	_TIM4_ClearFlag
- 229                     	xref	_TIM4_ITConfig
- 230                     	xref	_TIM4_Cmd
- 231                     	xref	_TIM4_TimeBaseInit
- 232                     	xref	_TIM4_DeInit
- 233                     	xref	_CLK_HSIPrescalerConfig
- 234                     	xref.b	c_x
- 235                     	xref.b	c_y
- 254                     	xref	c_lgadc
- 255                     	xref	c_ltor
- 256                     	end
+ 180                     ; 36 void delay_ms(uint32_t time)
+ 180                     ; 37 {
+ 181                     	switch	.text
+ 182  0026               _delay_ms:
+ 184  0026 5204          	subw	sp,#4
+ 185       00000004      OFST:	set	4
+ 188                     ; 39 	temp =millis();
+ 190  0028 adf5          	call	_millis
+ 192  002a 96            	ldw	x,sp
+ 193  002b 1c0001        	addw	x,#OFST-3
+ 194  002e cd0000        	call	c_rtol
+ 197  0031               L75:
+ 198                     ; 40 	while(millis()-temp<time);
+ 200  0031 adec          	call	_millis
+ 202  0033 96            	ldw	x,sp
+ 203  0034 1c0001        	addw	x,#OFST-3
+ 204  0037 cd0000        	call	c_lsub
+ 206  003a 96            	ldw	x,sp
+ 207  003b 1c0007        	addw	x,#OFST+3
+ 208  003e cd0000        	call	c_lcmp
+ 210  0041 25ee          	jrult	L75
+ 211                     ; 42 }
+ 214  0043 5b04          	addw	sp,#4
+ 215  0045 81            	ret
+ 241                     ; 48 INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23) 
+ 241                     ; 49 
+ 241                     ; 50 {   
+ 243                     	switch	.text
+ 244  0046               f_TIM4_UPD_OVF_IRQHandler:
+ 246  0046 8a            	push	cc
+ 247  0047 84            	pop	a
+ 248  0048 a4bf          	and	a,#191
+ 249  004a 88            	push	a
+ 250  004b 86            	pop	cc
+ 251  004c 3b0002        	push	c_x+2
+ 252  004f be00          	ldw	x,c_x
+ 253  0051 89            	pushw	x
+ 254  0052 3b0002        	push	c_y+2
+ 255  0055 be00          	ldw	x,c_y
+ 256  0057 89            	pushw	x
+ 259                     ; 52 	current_millis ++;
+ 261  0058 ae0000        	ldw	x,#_current_millis
+ 262  005b a601          	ld	a,#1
+ 263  005d cd0000        	call	c_lgadc
+ 265                     ; 53 	TIM4_ClearITPendingBit(TIM4_IT_UPDATE);
+ 267  0060 a601          	ld	a,#1
+ 268  0062 cd0000        	call	_TIM4_ClearITPendingBit
+ 270                     ; 54 }
+ 273  0065 85            	popw	x
+ 274  0066 bf00          	ldw	c_y,x
+ 275  0068 320002        	pop	c_y+2
+ 276  006b 85            	popw	x
+ 277  006c bf00          	ldw	c_x,x
+ 278  006e 320002        	pop	c_x+2
+ 279  0071 80            	iret
+ 302                     	xdef	f_TIM4_UPD_OVF_IRQHandler
+ 303                     	xdef	_current_millis
+ 304                     	xdef	_millis
+ 305                     	xdef	_delay_ms
+ 306                     	xdef	_Millis_Init
+ 307                     	xref	_TIM4_ClearITPendingBit
+ 308                     	xref	_TIM4_ClearFlag
+ 309                     	xref	_TIM4_ITConfig
+ 310                     	xref	_TIM4_Cmd
+ 311                     	xref	_TIM4_TimeBaseInit
+ 312                     	xref	_TIM4_DeInit
+ 313                     	xref	_CLK_HSIPrescalerConfig
+ 314                     	xref.b	c_x
+ 315                     	xref.b	c_y
+ 334                     	xref	c_lgadc
+ 335                     	xref	c_lcmp
+ 336                     	xref	c_lsub
+ 337                     	xref	c_rtol
+ 338                     	xref	c_ltor
+ 339                     	end

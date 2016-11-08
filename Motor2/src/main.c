@@ -56,7 +56,7 @@ uint8_t i=0;
 int main(void)
 {
  CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); //f_master = HSI = 16Mhz
- Millis_init();
+ Millis_Init();
  Port_DeInit_All();
  Motot2_Port_Init();
  Encoder2_Port_Init();

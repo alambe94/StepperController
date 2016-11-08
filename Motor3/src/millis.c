@@ -8,7 +8,7 @@
 __IO uint32_t current_millis = 0; //--IO: volatile read/write 
 
 
-void Millis_init(void)
+void Millis_Init(void)
 {
 	TIM4_DeInit();
 	 
@@ -32,6 +32,27 @@ uint32_t millis(void)
 {
 	return current_millis;
 }
+
+void delay_ms(uint32_t time)
+{
+	uint32_t temp;
+	temp =millis();
+	while(millis()-temp<time);
+	
+}
+
+
+void delay_us(unsigned char n) 
+{
+while(n--) 
+  { 
+	    _asm("nop");  
+      _asm("nop");  
+      _asm("nop");  
+      _asm("nop");  
+  }
+}
+
 
 
 //Interupt event, happen every 1 ms

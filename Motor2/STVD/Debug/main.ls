@@ -15,8 +15,8 @@
   68                     ; 58  CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); //f_master = HSI = 16Mhz
   70  0000 4f            	clr	a
   71  0001 cd0000        	call	_CLK_HSIPrescalerConfig
-  73                     ; 59  Millis_init();
-  75  0004 cd0000        	call	_Millis_init
+  73                     ; 59  Millis_Init();
+  75  0004 cd0000        	call	_Millis_Init
   77                     ; 60  Port_DeInit_All();
   79  0007 cd0000        	call	_Port_DeInit_All
   81                     ; 61  Motot2_Port_Init();
@@ -48,7 +48,7 @@
  200                     	xref	_Led_Pwm_init
  201                     	xref	_ScanEncoder4
  202                     	xref	_ScanEncoder2
- 203                     	xref	_Millis_init
+ 203                     	xref	_Millis_Init
  204                     	xref	_Encoder4_Port_Init
  205                     	xref	_Encoder2_Port_Init
  206                     	xref	_Motot2_Port_Init

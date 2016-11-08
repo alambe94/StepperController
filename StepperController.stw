@@ -14,7 +14,11 @@ Dependencies=
 [Project2]
 Filename=motor3\stvd\motor3.stp
 Dependencies=
+
+[Project3]
+Filename=remote\stvd\remote.stp
+Dependencies=
 [Options]
-ActiveProject=motor2
+ActiveProject=remote
 ActiveConfig=Debug
 AddSortedElements=1

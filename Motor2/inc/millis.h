@@ -5,7 +5,11 @@
 
 
 /* Private function prototypes -----------------------------------------------*/
-void Millis_init(void);
+void Millis_Init(void);
+void delay_ms(uint32_t time);
+void delay_us(unsigned char n); 
+
+
 uint32_t millis(void);
 
 
